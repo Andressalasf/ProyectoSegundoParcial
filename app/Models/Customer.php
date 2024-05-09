@@ -9,9 +9,16 @@ class Customer extends Model
 {
     use HasFactory;
     protected $table = "customers";
-
-    protected $fillable = ['first_name', 'email', 'address', 'phone'];
-    protected $guarded = ['id','created_at', 'updated_at'];
+    protected $fillable = [
+        'first_name',
+        'identification_document',
+        'email',
+        'phone', 
+        'address',
+        'status',
+        
+];
+    protected $guarded = ['id','status','registered_by','created_at', 'updated_at'];
 
     public function orders()
  {

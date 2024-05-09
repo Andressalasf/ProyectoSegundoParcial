@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Listado De Productos')
+@section('title','Listado detalle de ventas')
 @section('content')
 
 <div class="wrapper">
@@ -27,7 +27,7 @@
             <div class="card">
               <div class="card-header" style="background-color: #00DF8F;">
                 @yield('title')
-                <a href="{{ route('products.create') }}" class="btn btn-primary float-right" title="Agregar"><i class="fas fa-plus nav-icon"></i></a>
+                <a href="{{ route('sale_details.create') }}" class="btn btn-primary float-right" title="Agregar"><i class="fas fa-plus nav-icon"></i></a>
               </div>
               <!-- /.card-header -->
               <div class="card-body" style="background-color: #00DF8F;">
@@ -35,45 +35,48 @@
                   <thead>
                   <tr>
                     <th>Id</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
+                    <th>quantity</th>
+                    <th>unit_price</th>
+                    <th>subtotal</th>
+                    <th>sale_id</th>
+                    <th>product_id</th>
                     <th>Status</th>
-                    <th>image</th>
                     <th>registered_by</th>
                     <th>Action</th>
                   </tr>
                   </thead>
 
                   <tbody>
-                    @foreach($products as $product)
+                    @foreach($sale_details as $sale_detail)
                   <tr>
-                    <td>{{ $product -> id}}</td>
-                    <td>{{ $product -> name}}</td>
-                    <td>{{ $product -> description}}</td>
-                    <td>{{ $product -> purchase_price}}</td>
-                    <td>{{ $product -> stock_quantity}}</td>
-                    <td>{{ $product -> status}}</td>
-                    <td>{{ $product -> registered_by}}</td>
-                    <td>@if ($product->image!=null)
-                       <img class="img-responsive img-thumbnail" src="{{ asset('uploads/products/'.$product->image) }}" style="height: 70px; width: 70px" alt="">
+                    <td>{{ $sale_detail -> id}}</td>
+                    <td>{{ $sale_detail -> quantity}}</td>
+                    <td>{{ $sale_detail -> unit_price}}</td>
+                    <td>{{ $sale_detail -> subtotal}}</td>
+                    <td>{{ $sale_detail -> sale_id}}</td>
+                    <td>{{ $sale_detail -> product_id}}</td>
+                    <td>{{ $sale_detail -> status}}</td>
+                    <td>{{ $sale_detail -> registered_by}}</td>
+                    <td>@if ($sale_detail->image!=null)
+                       <img class="img-responsive img-thumbnail" src="{{ asset('uploads/sale_details/'.$sale_detail->image) }}" style="height: 70px; width: 70px" alt="">
                     @else 
                     @endif</td>
 
                     <td>
-											<input data-id="{{$product->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" 
-											data-toggle="toggle" data-on="Active" data-off="Inactive" {{ $product->status ? 'checked' : '' }}>
-										</td>
+                        <input data-id="{{$sale_detail->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" 
+                        data-toggle="toggle" data-on="Activo" data-off="Inactivo" {{ $sale_detail->status ? 'checked' : '' }}>
+                      
+                        
+                   </td>
                     <td>
-                        <form class="d-inline delete-form" action="{{route('products.destroy', $product)}}" method="POST">
+                        <form class="d-inline delete-form" action="{{route('sale_details.destroy', $sale_detail)}}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm" title="Delete"><i class="fas fa-trash-alt" ></i></button>
                         </form>
 
                         <a class="btn btn-info btn-sm"
-                        href="{{ route('products.edit', $product->id) }}" title="Edit"><i
+                        href="{{ route('sale_details.edit', $sale_detail->id) }}" title="Edit"><i
                             class="fas fa-pencil-alt"></i></a>
                     </td>
                   </tr>
@@ -110,12 +113,12 @@
 		$(function() {
 			$('.toggle-class').change(function() {
 				var status = $(this).prop('checked') == true ? 1 : 0;
-				var product_id = $(this).data('id');
+				var sale_detail_id = $(this).data('id');
 				$.ajax({
 					type: "GET",
 					dataType: "json",
-					url: 'changestatus_product',
-					data: {'status': status, 'product_id': product_id},
+					url: 'changestatus_sale_detail',
+					data: {'status': status, 'sale_detail_id': sale_detail_id},
 					success: function(data){
 					  console.log(data.success)
 					}

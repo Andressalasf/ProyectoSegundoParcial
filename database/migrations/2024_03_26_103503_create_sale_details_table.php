@@ -20,6 +20,8 @@ return new class extends Migration
             $table->foreign('sale_id')->references('id')->on('sales');
             $table->bigInteger('product_id')->unsigned();
             $table->foreign('product_id')->references('id')->on('products');
+            $table->string('status')->nullable();
+            $table->string('registered_by')->nullable();
             $table->timestamps();
         });
     }

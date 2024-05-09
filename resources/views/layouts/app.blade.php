@@ -32,6 +32,13 @@
   <link rel="stylesheet" href="{{asset('backend/plugins/daterangepicker/daterangepicker.css')}}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{asset('backend/plugins/summernote/summernote-bs4.min.css')}}">
+  {{-- Link para crear el delete --}}
+  <link rel="stylesheet" href="{{asset('backend/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/css/bootstrap-toggle.css">
+  <!-- Select2 -->
+	<link rel="stylesheet" href="{{asset('backend/plugins/select2/css/select2.min.css')}}">
+	<link rel="stylesheet" href="{{asset('backend/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+	<link rel="stylesheet" href="{{asset('backend/dist/css/select2.css')}}">
 
 
     <!-- DataTables -->
@@ -44,6 +51,7 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @stack('css')
+    
 
 </head>
 <body class= "hold-transition sidebar-mini layout-fixed">
@@ -92,6 +100,11 @@
 <script src="{{asset('backend/dist/js/demo.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{asset('backend/dist/js/pages/dashboard.js')}}"></script>
+{{-- Script para delete --}}
+<script src="{{asset('backend/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap-toggle.js"></script>
+<!-- Select2 -->
+<script src="{{asset('backend/plugins/select2/js/select2.full.min.js')}}"></script>
 
  <!-- DataTables  & Plugins -->
  <script src="{{ asset('backend/plugins/datatables/jquery.dataTables.min.js') }}"></script>

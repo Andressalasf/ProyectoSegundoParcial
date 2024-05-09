@@ -5,27 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Sale extends Model
 {
     use HasFactory;
 
     public $timestamps = false;
 
-    protected $table = 'products';
+    protected $table = 'sales';
     protected $fillable = [
-        'name',
-        'purchase_price',
-        'description',
-        'stock_quantity',
-        'expiration_date',
+        'sale_date',
+        'total_sale',
+        'customer_id',
         'status',
+        
     ];
 
     protected $guarded = ['id','status','registered_by','created_at','updated_at'];
 
    
 
-    public function sale_details()
+    public function customers()
     {
         return $this->hasMany(Order::class);
     }

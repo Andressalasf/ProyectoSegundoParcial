@@ -8,6 +8,9 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\Sale_detailController;
+use App\Models\Customer;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -56,7 +59,13 @@ Route::group(['middleware' => ['auth']],function(){
     Route::resource('products', ProductController::class);
     Route::resource('providers', ProviderController::class);
     Route::resource('orders', SaleController::class);
-    Route::resource('clients', CustomerController::class);
+    Route::resource('customers', CustomerController::class);
+    Route::get('changestatus_product', [ProductController::class, 'changestatus_product'])->name('changestatus_product');
+    Route::get('changestatus_customer', [CustomerController::class, 'changestatus_customer'])->name('changestatus_customer');
+    Route::resource('sales', SaleController::class);
+    Route::get('changestatus_sale', [SaleController::class, 'changestatus_sale'])->name('changestatus_sale');
+    Route::resource('sale_details', Sale_detailController::class);
+    Route::get('changestatus_sale_detail', [Sale_detailController::class, 'changestatus_sale_detail'])->name('changestatus_sale_detail');
     //Route::get('/products', [App\Http\Controllers\ProductController::class, 'index'])->name('products');
 
 

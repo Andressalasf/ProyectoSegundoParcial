@@ -18,59 +18,63 @@
 						<div class="card-header bg-secondary">
 							<h3>@yield('title')</h3>
 						</div>
-						<form method="POST" action="{{ route('products.update',$product) }}" enctype="multipart/form-data">
+						<form method="POST" action="{{ route('sale_details.update',$sale_detail) }}" enctype="multipart/form-data">
                             @csrf
 							@method('PUT')
 							<div class="card-body">
-								<div class="row">
-									<div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-										<div class="form-group label-floating">
-											<label class="control-label">Nombre <strong style="color:red;">(*)</strong></label>
-											<input type="text" class="form-control" name="name" placeholder="Por ejemplo, Positiva" autocomplete="off" value="{{ $product->nombre }}">
-										</div>
-									</div>
-								</div>
+			
 								<input type="hidden" class="form-control" name="registered_by" value="{{ Auth::user()->id }}">
 							</div>
+                            
                             <div class="row">
                                 <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                                     <div class="form-group label-floating">
-                                        <label class="control-label">Descripcion <strong style="color:red;">(*)</strong></label>
-                                        <textarea name="description" placeholder="Ingrese la descripcion del producto" id="" cols="120" rows="4"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Price <strong style="color:red;">(*)</strong></label>
-                                        <input type="text" class="form-control" name="purchase_price" placeholder="" autocomplete="off" value="{{ old('purchase_price') }}">
+                                        <label class="control-label">cantidad <strong style="color:red;">(*)</strong></label>
+                                        <input type="text" class="form-control" name="quantity" placeholder="" autocomplete="off" value="{{ old('quantity') }}">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                                     <div class="form-group label-floating">
-                                        <label class="control-label">Quantity <strong style="color:red;">(*)</strong></label>
-                                        <input type="text" class="form-control" name="stock_quantity" placeholder="" autocomplete="off" value="{{ old('stock_quantity') }}">
+                                        <label class="control-label">unit_price <strong style="color:red;">(*)</strong></label>
+                                        <input type="text" class="form-control" name="unit_price" placeholder="" autocomplete="off" value="{{ old('unit_price') }}">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12">
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
                                     <div class="form-group label-floating">
-                                        <label class="control-label">Fotografía</label>
-                                        <input type="file" class="form-control-file" name="image" id="image">
+                                        <label class="control-label">subtotal <strong style="color:red;">(*)</strong></label>
+                                        <input type="text" class="form-control" name="subtotal" placeholder="" autocomplete="off" value="{{ old('subtotal') }}">
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">sale_id <strong style="color:red;">(*)</strong></label>
+                                        <input type="text" class="form-control" name="sale_id" placeholder="" autocomplete="off" value="{{ old('sale_id') }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">product_id <strong style="color:red;">(*)</strong></label>
+                                        <input type="text" class="form-control" name="product_id" placeholder="" autocomplete="off" value="{{ old('product_id') }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            
 							<div class="card-footer">
 								<div class="row">
 									<div class="col-lg-2 col-xs-4">
 										<button type="submit" class="btn btn-primary btn-block btn-flat">Registrar</button>
 									</div>
 									<div class="col-lg-2 col-xs-4">
-										<a href="{{ route('products.index') }}" class="btn btn-danger btn-block btn-flat">Atras</a>
+										<a href="{{ route('sale_details.index') }}" class="btn btn-danger btn-block btn-flat">Atras</a>
 									</div>
 								</div>
 							</div>

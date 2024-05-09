@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Listado De Productos')
+@section('title','Listado De Clientes')
 @section('content')
 
 <div class="wrapper">
@@ -27,7 +27,7 @@
             <div class="card">
               <div class="card-header" style="background-color: #00DF8F;">
                 @yield('title')
-                <a href="{{ route('products.create') }}" class="btn btn-primary float-right" title="Agregar"><i class="fas fa-plus nav-icon"></i></a>
+                <a href="{{ route('customers.create') }}" class="btn btn-primary float-right" title="Agregar"><i class="fas fa-plus nav-icon"></i></a>
               </div>
               <!-- /.card-header -->
               <div class="card-body" style="background-color: #00DF8F;">
@@ -36,9 +36,10 @@
                   <tr>
                     <th>Id</th>
                     <th>Name</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
+                    <th>identification_document</th>
+                    <th>email</th>
+                    <th>phone</th>
+                    <th>address</th>
                     <th>Status</th>
                     <th>image</th>
                     <th>registered_by</th>
@@ -47,33 +48,36 @@
                   </thead>
 
                   <tbody>
-                    @foreach($products as $product)
+                    @foreach($customers as $customer)
                   <tr>
-                    <td>{{ $product -> id}}</td>
-                    <td>{{ $product -> name}}</td>
-                    <td>{{ $product -> description}}</td>
-                    <td>{{ $product -> purchase_price}}</td>
-                    <td>{{ $product -> stock_quantity}}</td>
-                    <td>{{ $product -> status}}</td>
-                    <td>{{ $product -> registered_by}}</td>
-                    <td>@if ($product->image!=null)
-                       <img class="img-responsive img-thumbnail" src="{{ asset('uploads/products/'.$product->image) }}" style="height: 70px; width: 70px" alt="">
+                    <td>{{ $customer -> id}}</td>
+                    <td>{{ $customer -> first_name}}</td>
+                    <td>{{ $customer -> identification_document}}</td>
+                    <td>{{ $customer -> email}}</td>
+                    <td>{{ $customer -> phone}}</td>
+                    <td>{{ $customer -> address}}</td>
+                    <td>{{ $customer -> status}}</td>
+                    <td>{{ $customer -> registered_by}}</td>
+                    <td>@if ($customer->image!=null)
+                       <img class="img-responsive img-thumbnail" src="{{ asset('uploads/customers/'.$customer->image) }}" style="height: 70px; width: 70px" alt="">
                     @else 
                     @endif</td>
 
                     <td>
-											<input data-id="{{$product->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" 
-											data-toggle="toggle" data-on="Active" data-off="Inactive" {{ $product->status ? 'checked' : '' }}>
-										</td>
+                        <input data-id="{{$customer->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" 
+                        data-toggle="toggle" data-on="Active" data-off="Inactive" {{ $customer->status ? 'checked' : '' }}>
+                      
+                        
+                   </td>
                     <td>
-                        <form class="d-inline delete-form" action="{{route('products.destroy', $product)}}" method="POST">
+                        <form class="d-inline delete-form" action="{{route('customers.destroy', $customer)}}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm" title="Delete"><i class="fas fa-trash-alt" ></i></button>
                         </form>
 
                         <a class="btn btn-info btn-sm"
-                        href="{{ route('products.edit', $product->id) }}" title="Edit"><i
+                        href="{{ route('customers.edit', $customer->id) }}" title="Edit"><i
                             class="fas fa-pencil-alt"></i></a>
                     </td>
                   </tr>
@@ -110,12 +114,12 @@
 		$(function() {
 			$('.toggle-class').change(function() {
 				var status = $(this).prop('checked') == true ? 1 : 0;
-				var product_id = $(this).data('id');
+				var customer_id = $(this).data('id');
 				$.ajax({
 					type: "GET",
 					dataType: "json",
-					url: 'changestatus_product',
-					data: {'status': status, 'product_id': product_id},
+					url: 'changestatus_customer',
+					data: {'status': status, 'customer_id': customer_id},
 					success: function(data){
 					  console.log(data.success)
 					}

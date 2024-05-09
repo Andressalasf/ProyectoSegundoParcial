@@ -18,10 +18,11 @@ class CustomerFactory extends Factory
     {
         return [
             'first_name'=> $this->faker -> name,
-            'address'=> $this->faker -> address,
-            'phone'=> $this->faker -> phoneNumber,
+            'identification_document'=> $this->faker -> numerify('#########'),
             'email'=> $this->faker -> email,
-            
+            'phone'=> $this->faker -> phoneNumber,
+            'address'=> $this->faker -> address,
+      
         ];
     }
 }

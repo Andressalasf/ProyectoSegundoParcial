@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('sale_date');
+            $table->dateTime('sale_date')->nullable();
             $table->decimal('total_sale', 10, 2);
             $table->bigInteger('customer_id')->unsigned();;
             $table->foreign('customer_id')->references('id')->on('customers');
+            $table->string('status')->nullable();
+            $table->string('registered_by')->nullable();
             $table->timestamps();
         });
     }

@@ -64,15 +64,21 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+                <a href="{{ route('customers.index') }}" class="nav-link">
                 <i class="fa-solid fa-user nav-icon"></i>
                   <p>Cliente</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/layout/boxed.html" class="nav-link">
+                <a href="{{ route('sales.index') }}" class="nav-link">
                 <i class="fa-solid fa-file-circle-check nav-icon"></i>
                   <p>Venta/Factura</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('sale_details.index') }}" class="nav-link">
+                <i class="fa-solid fa-file-circle-check nav-icon"></i>
+                  <p>Detalles de venta</p>
                 </a>
               </li>
              
