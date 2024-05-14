@@ -14,14 +14,13 @@ class Sale_detail extends Model
     protected $table = 'sale_details';
     protected $fillable = [
         'quantity',
-        'unit_price',
         'subtotal',
         'sale_id',
         'product_id',
-        'status'
+        
     ];
 
-    protected $guarded = ['id','status','registered_by','created_at','updated_at'];
+    protected $guarded = ['id','registered_by','created_at','updated_at'];
 
     public function sale()
     {

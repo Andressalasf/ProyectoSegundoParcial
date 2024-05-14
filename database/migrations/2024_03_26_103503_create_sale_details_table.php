@@ -14,13 +14,11 @@ return new class extends Migration
         Schema::create('sale_details', function (Blueprint $table) {
             $table->id();
             $table->integer('quantity');
-            $table->decimal('unit_price', 10, 2);
             $table->decimal('subtotal', 10, 2);
             $table->bigInteger('sale_id')->unsigned();
-            $table->foreign('sale_id')->references('id')->on('sales');
+            $table->foreign('sale_id')->references('id')->on('sales')->cascadeOnDelete();
             $table->bigInteger('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('products');
-            $table->string('status')->nullable();
+            $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();;
             $table->string('registered_by')->nullable();
             $table->timestamps();
         });

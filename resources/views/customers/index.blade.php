@@ -30,7 +30,7 @@
                 <a href="{{ route('customers.create') }}" class="btn btn-primary float-right" title="Agregar"><i class="fas fa-plus nav-icon"></i></a>
               </div>
               <!-- /.card-header -->
-              <div class="card-body" style="background-color: #00DF8F;">
+              <div class="card-body" style="background-color: #0A1E41;">
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
                   <tr>

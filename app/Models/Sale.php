@@ -17,6 +17,8 @@ class Sale extends Model
         'total_sale',
         'customer_id',
         'status',
+        'route'
+    
         
     ];
 
@@ -24,8 +26,14 @@ class Sale extends Model
 
    
 
-    public function customers()
+    public function customer()
     {
-        return $this->hasMany(Order::class);
+        return $this->belongsTo(Customer::class);
+    }
+
+   
+    public function saleDetails()
+    {
+        return $this->hasMany(Sale_detail::class);
     }
 }

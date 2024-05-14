@@ -15,11 +15,14 @@ return new class extends Migration
             $table->id();
             $table->dateTime('sale_date')->nullable();
             $table->decimal('total_sale', 10, 2);
-            $table->bigInteger('customer_id')->unsigned();;
-            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->bigInteger('customer_id')->unsigned();
+            $table->foreign('customer_id')->references('id')->on('customers')->cascadeOnDelete();;
             $table->string('status')->nullable();
             $table->string('registered_by')->nullable();
-            $table->timestamps();
+            $table->string('route')->nullable();
+
+            
+           
         });
     }
 

@@ -13,7 +13,7 @@
       <!-- SidebarSearch Form -->
       <div class="form-inline">
         <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="" aria-label="Search">
           <div class="input-group-append">
             <button class="btn btn-sidebar">
               <i class="fas fa-search fa-fw"></i>
@@ -76,7 +76,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('sale_details.index') }}" class="nav-link">
+                {{-- <a href="{{ route('sales.index') }}" class="nav-link"> --}}
                 <i class="fa-solid fa-file-circle-check nav-icon"></i>
                   <p>Detalles de venta</p>
                 </a>

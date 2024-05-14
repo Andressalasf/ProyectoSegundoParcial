@@ -20,8 +20,8 @@ class Customer extends Model
 ];
     protected $guarded = ['id','status','registered_by','created_at', 'updated_at'];
 
-    public function orders()
+    public function sales()
  {
- return $this->hasMany(Order::class);
+   return $this->hasMany(Sale::class);
  }
 }
