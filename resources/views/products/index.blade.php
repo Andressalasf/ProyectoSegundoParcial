@@ -31,7 +31,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body" style="background-color: #0A1E41;">
-                <table id="example2" class="table table-bordered table-hover">
+                <table id="example1" class="table table-bordered table-hover">
                   <thead>
                   <tr>
                     <th>Id</th>
@@ -54,17 +54,19 @@
                     <td>{{ $product -> description}}</td>
                     <td>{{ $product -> purchase_price}}</td>
                     <td>{{ $product -> stock_quantity}}</td>
-                    <td>{{ $product -> status}}</td>
-                    <td>{{ $product -> registered_by}}</td>
+                    <td>
+											<input data-id="{{$product->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" 
+											data-toggle="toggle" data-on="Active" data-off="Inactive" {{ $product->status ? 'checked' : '' }}>
+										</td>
+                  
                     <td>@if ($product->image!=null)
                        <img class="img-responsive img-thumbnail" src="{{ asset('uploads/products/'.$product->image) }}" style="height: 70px; width: 70px" alt="">
                     @else 
                     @endif</td>
 
-                    <td>
-											<input data-id="{{$product->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" 
-											data-toggle="toggle" data-on="Active" data-off="Inactive" {{ $product->status ? 'checked' : '' }}>
-										</td>
+                    <td>{{ $product -> registered_by}}</td>
+
+                   
                     <td>
                         <form class="d-inline delete-form" action="{{route('products.destroy', $product)}}" method="POST">
                             @csrf

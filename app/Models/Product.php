@@ -18,7 +18,9 @@ class Product extends Model
         'description',
         'stock_quantity',
         'expiration_date',
+        'image',
         'status',
+        'registered_by',
     ];
 
     protected $guarded = ['id','status','registered_by','created_at','updated_at'];

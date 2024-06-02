@@ -35,7 +35,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProductRequest $request)
+    public function store(Request $request)
     {
         
       
@@ -91,7 +91,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ProductRequest $request,$id){
+    public function update(Request $request,$id){
   
 			$product = Product::find($id);
 			$image = $request->file('image');
@@ -103,7 +103,7 @@ class ProductController extends Controller
 
 				if (!file_exists('uploads/products'))
 				{
-					mkdir('uploads/porducts',0777,true);
+					mkdir('uploads/products',0777,true);
 				}
 				$image->move('uploads/products',$imagename);
 			}else{

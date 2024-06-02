@@ -21,7 +21,7 @@ class SaleRequest extends FormRequest
      */
     public function rules(): array
     {
-        if ($this->isMethod('post')) {
+        if ($this->isMethod('POST')) {
             return [
                 'sale_date' => 'required|date',
                 'total_sale' => 'required|numeric|min:0',
@@ -35,7 +35,7 @@ class SaleRequest extends FormRequest
                 'sale_details.*.product_id' => 'required|exists:products,id',
                 'sale_details.*.registered_by' => 'nullable|string'
             ];
-        } elseif ($this->isMethod('put')) {
+        } elseif ($this->isMethod('PUT')) {
             return [
                 'sale_date' => 'required|date',
                 'total_sale' => 'required|numeric|min:0',

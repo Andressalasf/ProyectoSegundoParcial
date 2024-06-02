@@ -61,24 +61,16 @@
                                                         
                                                     </td>
                                                     <td>{{ $sale->sale_date }}</td>
+                                                    
                                                     <td>{{ $sale->total_sale }}</td>
-                                                    <td>{{ $sale->status }}</td>
-                                                    <td>{{ $sale->registered_by }}</td>
-                                                    <td>
-                                                        @if ($sale->image != null)
-                                                            <img class="img-responsive img-thumbnail"
-                                                                src="{{ asset('uploads/sales/' . $sale->image) }}"
-                                                                style="height: 70px; width: 70px" alt="">
-                                                        @else
-                                                        @endif
-                                                    </td>
-
                                                     <td>
                                                         <input data-id="{{ $sale->id }}" class="toggle-class"
                                                             type="checkbox" data-onstyle="success" data-offstyle="danger"
                                                             data-toggle="toggle" data-on="Activo" data-off="Inactivo"
                                                             {{ $sale->status ? 'checked' : '' }}>
                                                     </td>
+                                                    <td>{{ $sale->registered_by }}</td>
+                                                   
                                                     <td>
                                                         <form class="d-inline delete-form"
                                                             action="{{ route('sales.destroy', $sale->id) }}"
@@ -88,9 +80,9 @@
                                                             <button type="submit" class="btn btn-danger btn-sm"
                                                                 title="Delete"><i class="fas fa-trash-alt"></i></button>
                                                         </form>
-
+                                                        
                                                         <a href="{{ route('sales.show', $sale) }}"
-                                                        class="btn btn-primary btn-sm" title="View bill">
+                                                        class="btn btn-primary btn-sm" title="View">
                                                         <i class="fa-solid fa-eye"></i>
                                                     </a>
                                                     </td>

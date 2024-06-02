@@ -21,25 +21,30 @@ class ProductRequest extends FormRequest
      */
     public function rules(): array
     {
-        if(request()->isMethod('post')){
+        if(request()->isMethod('POST')){
 			return [
-                'name' => 'required|string',
-                'purchase_price' => 'required|numeric|min:0',
-                'description' => 'nullable|string',
-                'stock_quantity' => 'required|integer|min:0',
-                'expiration_date' => 'nullable|date',
-                'image' => 'nullable|mimes:jpg,jpeg,png|max:3000',
+                'name' => 'required|regex:/^[\pL\s\-]+$/u',
+                'purchase_price' => 'nullable',
+                'description' => 'nullable',
+                'stock_quantity' => 'required',
+                'expiration_date' => 'nullable',
+                'image' => 'nullable|mimes:jpg,jpeg,png|max:6000',
+                'status' => 'nullable',
+                'registered_by' => 'nullable',
                
 		
 			];	
-		} elseif(request()->isMethod('put')){
+		} elseif(request()->isMethod('PUT')){
 			return [
-                'name' => 'required|string',
-                'purchase_price' => 'required|numeric|min:0',
-                'description' => 'nullable|string',
-                'stock_quantity' => 'required|integer|min:0',
-                'expiration_date' => 'nullable|date',
-                'image' => 'nullable|mimes:jpg,jpeg,png|max:3000',
+                'name' => 'required|regex:/^[\pL\s\-]+$/u',
+                'purchase_price' => 'nullable',
+                'description' => 'nullable',
+                'stock_quantity' => 'required',
+                'expiration_date' => 'nullable',
+                'image' => 'nullable|mimes:jpg,jpeg,png|max:6000',
+                'status' => 'nullable',
+                'registered_by' => 'nullable',
+               
                 
 			];
 		}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaleRequest;
 use Illuminate\Http\Request;
 use Illuminate\support\Facades\DB;
 use App\Models\Sale;
@@ -11,7 +12,6 @@ use App\Models\Sale_detail;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
-use Illuminate\Http\SaleRequest;
 use Exception;
 
 
@@ -27,7 +27,7 @@ class SaleController extends Controller
      //-> join ('customers', 'customer_id', '=', 'sales.customer_id')->get();
         //$sales = Sale::with('customer')->get();
 
-        $sales = Sale::select('customers.first_name', 'customers.identification_document', 'sales.id', 'sales.total_sale', 'sales.sale_date','sales.status')
+        $sales = Sale::select('customers.first_name', 'customers.identification_document', 'sales.id', 'sales.total_sale', 'sales.sale_date','sales.status','sales.registered_by')
             ->join('customers', 'sales.customer_id', '=', 'customers.id')
             ->get();
         return view('sales.index', compact('sales'));
@@ -55,12 +55,12 @@ class SaleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(SaleRequest $request)
     {
         
         $sale = Sale::create([
             'sale_date' => Carbon::now()->toDateTimeString(),
-            'total_sale' => 0,
+            'total_sale' => $request->total_sale,
             'route' => "Por hacer",
             'customer_id' => Customer::find($request->customer)->id,
         ]);
@@ -68,25 +68,47 @@ class SaleController extends Controller
         $sale->status = 1;
         $sale->registered_by = $request->registered_by;
 
-        $total_sale = 0;
+        //$total_sale = 0;
+
+        //  $rawProductId = $request->product_id;
+        //  $rawQuantity = $request->quantity;
+        // for ($i = 0; $i < count($rawProductId); $i++) {
+        //     $product = Product::find($rawProductId[$i]);
+        //     $quantity = $rawQuantity[$i];
+        //     $subtotal = $product->purchase_price * $quantity;
+
+        //   $sale->saleDetails()->create([
+        //         'quantity' => $quantity,
+        //         'subtotal' => $subtotal,
+        //         'product_id' => $product->id,
+        //      ]);
+
+             
+        //  }
 
         $rawProductId = $request->product_id;
         $rawQuantity = $request->quantity;
+    
+       
         for ($i = 0; $i < count($rawProductId); $i++) {
+           
             $product = Product::find($rawProductId[$i]);
+            
+    
             $quantity = $rawQuantity[$i];
+    
+           
             $subtotal = $product->purchase_price * $quantity;
-
+    
+            // Crear el detalle de la venta
             $sale->saleDetails()->create([
                 'quantity' => $quantity,
                 'subtotal' => $subtotal,
                 'product_id' => $product->id,
             ]);
-
-            $total_sale += $subtotal;
         }
 
-        $sale->total_sale = $total_sale;
+        // $sale->total_sale = $total_sale;
         $sale->save();
 
         return redirect()->route("sales.index")->with("success", "The orders has been created.");
@@ -99,13 +121,20 @@ class SaleController extends Controller
      */
     public function show(string $id)
     {
-        $sale = Sale::find($id);
-        $customer = Customer::where("id", $sale->client_id)->first();
-        $details = Sale_detail::select('sale_details.product_id', 'sale_details.quantity', 'sale_details.subtotal')
-            ->where('sale_details.sale_id', '=', $id)
-            ->get();
+        // $sale = Sale::find($id);
+        // $customer = Customer::where("id", $sale->customer_id)->first();
+        // $details = Sale_detail::with('product')
+        //     ->where('sale_details.sale_id', '=', $id)
+        //     ->get();
 
-        return view("sales.show", compact("sale",'customer', "details"));
+        $sales=Sale::select('customers.first_name as customerName','customers.identification_document as document','sales.sale_date', 'sales.total_sale', 'sales.id')
+        ->join('customers', 'sales.customer_id', '=', 'customers.id')->where('sales.id', '=', $id)->first();
+        $details=Sale_detail::select('products.name as productName','products.purchase_price as productPrice', 'sale_details.quantity', 'sale_details.subtotal')
+        ->join('products', 'sale_details.product_id', '=', 'products.id')
+        ->join('sales', 'sale_details.sale_id', '=', 'sales.id')
+        ->where('sale_details.sale_id', '=', $id)
+        ->get();
+        return view("sales.show", compact('sales','details'));
     }
 
     /**

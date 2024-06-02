@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -36,12 +35,12 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $customer = new Customer();
       
 		
 
         $image = $request->file('image');
-			$slug = Str::slug($request->name);
+		$slug = Str::slug($request->name);
 			if (isset($image))
 			{
 				$currentDate = Carbon::now()->toDateString();
@@ -52,12 +51,10 @@ class CustomerController extends Controller
 					mkdir('uploads/customers',0777,true);
 				}
 				$image->move('uploads/customers',$imagename);
-			}else{
-				$imagename = "";
+				$customer->image=$imagename;
 			}
-            
-
-            $customer = new Customer();
+			
+    
 			
 			$customer->first_name= $request->first_name;
 			$customer->identification_document= $request->identification_document;
@@ -65,7 +62,6 @@ class CustomerController extends Controller
             $customer->phone= $request->phone;
             $customer->address= $request->address;
             $customer->status=1;
-            $customer->image=$imagename;
             $customer->registered_by=$request->user()->id;
 			$customer->save();
 
@@ -103,12 +99,15 @@ class CustomerController extends Controller
 
 				if (!file_exists('uploads/customers'))
 				{
-					mkdir('uploads/porducts',0777,true);
+					mkdir('uploads/customers',0777,true);
 				}
-				$image->move('uploads/customers',$imagename);
-			}else{
-				$imagename = $customer->image;
+
+                $image->move('uploads/customers',$imagename);
+				$customer->image=$imagename;
+				
 			}
+                
+			
 			
 			$customer->first_name= $request->first_name;
 			$customer->identification_document= $request->identification_document;

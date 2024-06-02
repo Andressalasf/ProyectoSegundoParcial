@@ -86,3 +86,18 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Ruta para probar el error 403
+Route::get('/403', function () {
+    abort(403);
+});
+
+// Ruta para probar el error 419
+Route::get('/419', function () {
+    abort(419);
+});
+
+// Ruta para probar el error 500
+Route::get('/500', function () {
+    abort(500);
+});

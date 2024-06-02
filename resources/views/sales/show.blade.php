@@ -7,6 +7,19 @@
         <section class="content">
             <div class="container-fluid">
                 <div class="table-responsive">
+					<div class="row p-3">
+                        <div class="col-6">
+							Customer: {{$sales->customerName }}
+							<br>
+							Customer_Document: {{ $sales->document }}
+						</div>
+						<div class="col-6">
+							Date: {{ $sales->sale_date }}
+							<br>
+							N.factura: {{ $sales->id }}
+						</div>
+						
+					</div>
                     <table class="table table-bordered table-striped">
                         <thead class="thead-dark">
                             <tr>
@@ -16,17 +29,24 @@
                                 <th scope="col">Subtotal</th>
                             </tr>
                         </thead>
-                        <tbody>
+                         <tbody>
                             @foreach ($details as $detail)
                                 <tr>
-                                    <td>{{ $detail->product_id }}</td>
-                                    <td>${{ ($detail->product->purchase_price) }}</td>
+                                    <td>{{ $detail->productName }}</td>
+                                    <td>${{ ($detail->productPrice) }}</td>
                                     <td>{{ $detail->quantity }}</td>
                                     <td>${{($detail->subtotal) }}</td>
                                 </tr>
                             @endforeach
-                        </tbody>
+                            
+                            
+
+                        </tbody> 
+                        
                     </table>
+                    <div class="col-6">
+                        Total: ${{ $sales->total_sale }}
+                    </div>
                 </div>
             </div>
         </section>

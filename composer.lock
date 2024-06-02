@@ -4,15 +4,16 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d29603d2d8b7123d7d15c3e527f9120d",
+    
+    "content-hash": "0e718abd690a59d3a62897a2867c80b3",
     "packages": [
         {
-            "name": "brick/math",
-            "version": "0.11.0",
+            "name": "barryvdh/laravel-dompdf",
+            "version": "v2.2.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/brick/math.git",
-                "reference": "0ad82ce168c82ba30d1c01ec86116ab52f589478"
+                "url": "https://github.com/barryvdh/laravel-dompdf.git",
+                "reference": "c96f90c97666cebec154ca1ffb67afed372114d8"
             },
             "dist": {
                 "type": "zip",

@@ -20,11 +20,13 @@ class SaleFactory extends Factory
 
     
     {
-        $customerIds = DB::table('customers')->pluck('id')->toArray();
+        // $customerIds = DB::table('customers')->pluck('id')->toArray();
         return [
             'sale_date' => $this->faker->dateTime(),
             'total_sale' => $this->faker->randomFloat(2, 10, 500), 
-            'customer_id' => $this->faker->randomElement($customerIds),
+            'customer_id' => \App\Models\Customer::factory(),
+            'registered_by' => \App\Models\User::factory(),
+            'status' => "1",
         ];
     }
 }

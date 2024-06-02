@@ -21,27 +21,25 @@ class CustomerRequest extends FormRequest
      */
     public function rules(): array
     {
-        if (request()->isMethod('post')) {
+        if (request()->isMethod('POST')) {
             return [
-                'first_name' => 'required|string',
+                'first_name' => 'required|regex:/^[\pL\s\-]+$/u',
                 'identification_document' => 'nullable|string',
-                'email' => 'required|email|unique:customers,email',
-                'phone' => 'nullable|string|max:10', 
-                'address' => 'nullable|string',
-                'status' => 'nullable|string',
+                'email' => 'required',
+                'phone' => 'nullable', 
+                'address' => 'nullable',
                 'image' => 'nullable|mimes:jpg,jpeg,png|max:3000',
-                'registered_by' => 'nullable|string',
+                
             ];
-        } elseif (request()->isMethod('put')) {
+        } elseif (request()->isMethod('PUT')) {
             return [
-                'first_name' => 'required|string',
+                'first_name' => 'required|regex:/^[\pL\s\-]+$/u',
                 'identification_document' => 'nullable|string',
-                'email' => 'required|email',
-                'phone' => 'nullable|string|max:10', 
-                'address' => 'nullable|string',
-                'status' => 'nullable|string',
+                'email' => 'required',
+                'phone' => 'nullable', 
+                'address' => 'nullable',
                 'image' => 'nullable|mimes:jpg,jpeg,png|max:3000',
-                'registered_by' => 'nullable|string',
+                
             ];
         }
     }

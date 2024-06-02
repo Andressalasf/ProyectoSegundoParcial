@@ -1,116 +1,194 @@
 @extends('layouts.app')
 
-@section('title','Crear Factura')
+@section('title', 'Crear Venta')
 
 @section('content')
-
-<div class="content-wrapper">
-    <section class="content-header">
-		<div class="container-fluid">
-		</div>
-    </section>
-	{{-- @include('layouts.partial.msg') --}}
-	<section class="content">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="card">
-						<div class="card-header " style="background-color: #00DF8F;">
-							<h3>@yield('title')</h3>
-						</div>
-						<form method="POST" action="{{ route('sales.store') }}" enctype="multipart/form-data">
-							@csrf
-							<div class="card-body">
-								
-                                <div class="row">
-                                    <div class="col-lg-3 col-sm-3 col-md-3 col-xs-6">
-                                        <div class="form-group label-floating">
-                                            <label class="control-label" for="Client_name">Sale_date <strong style="color:red;">(*)</strong></label>
-                                            <select class="form-control" name="customer" id="customer" >
-											<option value> select customer</option>
-											@foreach($customers as $customer)
-											<option value = "{{$customer->id}}">{{$customer->first_name}} (ID. {{ $customer->id}})</option>
-											@endforeach
-											</select>
+    <div class="content-wrapper">
+        <section class="content-header">
+            <div class="container-fluid"></div>
+        </section>
+        
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header" style="background-color: #00DF8F;">
+                                <h3>@yield('title')</h3>
+                            </div>
+                            <form method="POST" action="{{ route('sales.store') }}" enctype="multipart/form-data">
+                                @csrf
+                                <div class="card-body" id="form-fields">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-sm-12 col-md-12 col-xs-12">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Client<strong style="color:red;">(*)</strong></label>
+                                                <select class="form-control select2" name="customer" id="customer">
+                                                    <option value="-1">Enter the client</option>
+                                                    @foreach ($customers as $customer)
+                                                        <option value="{{ $customer->id }}">{{ $customer->first_name }} ({{ $customer->identification_document }})</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                         </div>
-										
+                                    </div>
+                                     <div class="row">
+                                        <div class="col-12">
+                                            <input type="hidden" class="form-control" name="status" value="1">
+                                            <input type="hidden" class="form-control" name="registered_by"
+                                                value="{{ Auth::user()->id }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-2" data-details-field="true">
+                                        <div class="col-3">
+                                            <select id="product" class="form-control">
+                                                @foreach ($products as $product)
+                                                    <option value="{{ $product->id }}" data-price="{{ $product->purchase_price }}" data-name="{{ $product->name }}">
+                                                        {{ $product->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-2">
+                                            <label for="quantity">Quantity</label>
+                                            <input type="number" id="quantity" class="quantity-input form-control">
+                                        </div>
+                                        <div class="col-2">
+                                            <label for="price">Price</label>
+                                            <input type="number" id="price" class="price-input form-control" readonly>
+                                        </div>
+                                        <div class="col-2">
+                                            <label for="subtotal">Subtotal</label>
+                                            <input type="number" id="subtotal" class="subtotal-input form-control" readonly>
+                                        </div>
+                                        <div class="col-2">
+                                            <button type="button" class="btn btn-primary" id="add-btn">Add Product</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-4">
+                                        <div class="col-12">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Product</th>
+                                                        <th>Quantity</th>
+                                                        <th>Price</th>
+                                                        <th>Subtotal</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="list-products"></tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                                
-								 <input type="hidden" class="form-control" name="status" value="1">
-								<input type="hidden" class="form-control" name="registered_by" value="{{ Auth::user()->id }}"> 
 
-								<span id="add-field-button" class="btn btn-primary btn-block btn-flat my-4">
-									Añadir Producto
-								</span>
+                                <div class="card-footer">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <span class="h3 d-block text-center m-1" id="total-text">Total: $0</span>
+                                        </div>
+                                        <input name="total_sale" type="hidden" id="total-sale">
+                                        <div class="col-4">
+                                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                                        </div>
+                                        <div class="col-4">
+                                            <a href="{{ route('sales.index') }}" class="btn btn-danger btn-block">Back</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 
-								<div class="row" data-details-field=true>
-									<select class="form-control" name="product_id[]">
-										<option value="-1">Please select a product</option>
-										@foreach ($products as $product)
-											<option value="{{ $product->id }}">{{ $product->name }}
-												(${{ $product->purchase_price }})
-											</option>
-										@endforeach
-									</select>
-
-									<input type="number" class="form-control" name="quantity[]" value="1">
-								</div>
-							</div>
-
-
-							<div class="card-footer">
-								<div class="row">
-									<div class="col-lg-2 col-xs-4">
-										<button type="submit" class="btn btn-primary btn-block btn-flat">Registrar</button>
-									</div>
-									<div class="col-lg-2 col-xs-4">
-										<a href="{{ route('products.index') }}" class="btn btn-danger btn-block btn-flat">Atras</a>
-									</div>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-</div>
+    <style>
+        .select2 [role="textbox"] {
+            margin-top: -8px !important;
+            margin-left: -8px !important;
+        }
+    </style>
 @endsection
 
 @push('scripts')
-<!-- SCRIPT TO SELECT CLIENT -->
-<script type="text/javascript">
-	$("#customer").select2({
-		allowClear: true
-	});
-</script>
-<!-- SCRIPT TO LOCAL DATE -->
-<script type="text/javascript">
-	$.fn.datepicker.dates['en'] = {
-		days: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-		daysShort: ['Dom','Lun','Mar','Mié','Juv','Vie','Sáb'],
-		daysMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sá'],
-		months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-		monthsShort: ['Ene','Feb','Mar','Abr', 'May','Jun','Jul','Ago','Sep', 'Oct','Nov','Dic'],
-		format: "yyyy-mm-dd"
-	};
-	$('#sale_date').datepicker({
-		language: 'en'
-	});
-</script>
-{{-- SCRIPT PARA LO DEL PRODUCTO --}}
-<script>
-	fields = document.querySelector("#form-fields")
-	addButton = document.querySelector("#add-field-button")
+    <script>
+    function generateHTML(productId, name, quantity, price, subtotal) {
+        return `
+            <tr>
+                <td>${name}</td>
+                <td>${quantity}</td>
+                <td>$${price}</td>
+                <td>$${subtotal}</td>
+                <td><button type="button" class="btn btn-danger btn-remove">Remove</button></td>
+                <input type="hidden" name="product_id[]" value="${productId}">
+                <input type="hidden" name="quantity[]" value="${quantity}">
+                <input type="hidden" name="purchase_price[]" value="${price}">
+                <input type="hidden" name="subtotal[]" value="${subtotal}">
+            </tr>
+        `;
+    }
 
-	addButton.addEventListener("click", () => {
-		elem = createRowWithFields()
-		fields.appendChild(elem)
-	})
+    $(document).ready(function() {
+        let listProducts = $('#list-products');
+        let addButton = $('#add-btn');
+        let productSelect = $('#product');
+        let productPrice = $('#price');
+        let productQuantity = $('#quantity');
+        let productSubtotal = $('#subtotal');
+        let totalText = $('#total-text');
+        let totalInput = $('#total-sale');
+        let total = 0;
 
-	function createRowWithFields() {
-		return document.querySelector("[data-details-field=true]").cloneNode(true);
-	}
+        productSelect.select2();
+        updateSubtotal();
+
+        addButton.on("click", function() {
+            let productId = productSelect.val();
+            let quantity = parseInt(productQuantity.val());
+            let price = parseFloat(productPrice.val());
+            let subtotal = quantity * price;
+            let name = productSelect.find(':selected').data('name');
+
+            total += subtotal;
+            totalText.text(`Total: $${total.toFixed(2)}`);
+            totalInput.val(total.toFixed(2));
+
+            let newRow = $(generateHTML(productId, name, quantity, price.toFixed(2), subtotal.toFixed(2)));
+            newRow.find('.btn-remove').on('click', function() {
+                let row = $(this).closest('tr');
+                let rowSubtotal = parseFloat(row.find('td').eq(3).text().replace('$', ''));
+                total -= rowSubtotal;
+                totalText.text(`Total: $${total.toFixed(2)}`);
+                totalInput.val(total.toFixed(2));
+                row.remove();
+            });
+
+            listProducts.append(newRow);
+            productQuantity.val('');
+            productSubtotal.val('');
+        });
+
+        function updateSubtotal() {
+            let quantity = parseInt(productQuantity.val()) || 0;
+            let price = parseFloat(productSelect.find(':selected').data('price')) || 0;
+            let subtotal = quantity * price;
+            productPrice.val(price.toFixed(2));
+            productSubtotal.val(subtotal.toFixed(2));
+        }
+
+        productSelect.on('select2:select', updateSubtotal);
+        productQuantity.on('input', updateSubtotal);
+    });
+    </script>
+    <!-- SCRIPT TO SELECT CLIENT -->
+<script type="text/javascript">
+    $("#customer").select2({
+        allowClear: true
+    });
 </script>
 @endpush

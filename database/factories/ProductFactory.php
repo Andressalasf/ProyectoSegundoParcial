@@ -22,6 +22,9 @@ class ProductFactory extends Factory
             'stock_quantity' => $this ->faker->randomNumber(2),
             'purchase_price' => $this ->faker->randomNumber(2,0,1000),
             'expiration_date' => $this ->faker->date(),
+            'image' => randomPhoto(),
+            'registered_by' => \App\Models\User::factory(),
+            'status' => "1",
             
 
         ];

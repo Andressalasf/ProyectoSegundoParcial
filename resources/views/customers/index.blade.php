@@ -31,7 +31,7 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body" style="background-color: #0A1E41;">
-                <table id="example2" class="table table-bordered table-hover">
+                <table id="example1" class="table table-bordered table-hover">
                   <thead>
                   <tr>
                     <th>Id</th>
@@ -56,19 +56,19 @@
                     <td>{{ $customer -> email}}</td>
                     <td>{{ $customer -> phone}}</td>
                     <td>{{ $customer -> address}}</td>
-                    <td>{{ $customer -> status}}</td>
-                    <td>{{ $customer -> registered_by}}</td>
-                    <td>@if ($customer->image!=null)
-                       <img class="img-responsive img-thumbnail" src="{{ asset('uploads/customers/'.$customer->image) }}" style="height: 70px; width: 70px" alt="">
-                    @else 
-                    @endif</td>
-
                     <td>
-                        <input data-id="{{$customer->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" 
-                        data-toggle="toggle" data-on="Active" data-off="Inactive" {{ $customer->status ? 'checked' : '' }}>
-                      
-                        
-                   </td>
+                      <input data-id="{{$customer->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" 
+                      data-toggle="toggle" data-on="Active" data-off="Inactive" {{ $customer->status ? 'checked' : '' }}>
+                 </td>
+                 <td>@if ($customer->image!=null)
+                  <img class="img-responsive img-thumbnail" src="{{ asset('uploads/customers/'.$customer->image) }}" style="height: 70px; width: 70px" alt="">
+               @else 
+               @endif</td>
+                   
+                    <td>{{ $customer -> registered_by}}</td>
+                    
+
+                   
                     <td>
                         <form class="d-inline delete-form" action="{{route('customers.destroy', $customer)}}" method="POST">
                             @csrf

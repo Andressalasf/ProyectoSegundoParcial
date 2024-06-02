@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\Customer;
+use App\Models\Sale;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+
 
 class HomeController extends Controller
 {
@@ -23,6 +29,20 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $productCount = Product::where('status','=','1')->count();
+        $date = Carbon::now();
+        $date = $date->format('Y-m-d');
+        $customerCount = Customer::where('status','=','1')->count();
+        //$customerCount = DB::table('customers')->where('customers.date',$date)->get()->count("id");
+        
+        $saleCountDay = Sale::whereDate('sale_date', '=', Carbon::now()->format('Y-m-d'))->get()->count("id");
+        $saleCountTotal = Sale::whereDate('sale_date', '=', Carbon::now()->format('Y-m-d'))->get()->sum("total_sale");
+
+        $saleCountMes = Sale::whereMonth('sale_date', date('m'))->get()->count("id");
+        $saleCountTotalMes = Sale::whereMonth('sale_date', date('m'))->get()->sum("total_sale");
+
+    
+
+        return view('home', compact('productCount','saleCountDay','saleCountTotal','customerCount', 'saleCountMes', 'saleCountTotal','saleCountTotalMes'));
     }
 }

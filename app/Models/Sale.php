@@ -17,7 +17,7 @@ class Sale extends Model
         'total_sale',
         'customer_id',
         'status',
-        'route'
+        'route',
     
         
     ];
