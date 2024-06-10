@@ -24,11 +24,11 @@ class CustomerRequest extends FormRequest
         if (request()->isMethod('POST')) {
             return [
                 'first_name' => 'required|regex:/^[\pL\s\-]+$/u',
-                'identification_document' => 'nullable|string',
+                'identification_document' => 'nullable',
                 'email' => 'required',
                 'phone' => 'nullable', 
                 'address' => 'nullable',
-                'image' => 'nullable|mimes:jpg,jpeg,png|max:3000',
+                'image' => 'nullable|mimes:jpg,jpeg,png|max:6000',
                 
             ];
         } elseif (request()->isMethod('PUT')) {
@@ -38,7 +38,7 @@ class CustomerRequest extends FormRequest
                 'email' => 'required',
                 'phone' => 'nullable', 
                 'address' => 'nullable',
-                'image' => 'nullable|mimes:jpg,jpeg,png|max:3000',
+                'image' => 'nullable|mimes:jpg,jpeg,png|max:6000',
                 
             ];
         }

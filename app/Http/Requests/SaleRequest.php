@@ -23,31 +23,20 @@ class SaleRequest extends FormRequest
     {
         if ($this->isMethod('POST')) {
             return [
-                'sale_date' => 'required|date',
-                'total_sale' => 'required|numeric|min:0',
-                'customer_id' => 'required|exists:customers,id',
-                'status' => 'nullable|string',
-                'registered_by' => 'nullable|string',
-                'route' => 'nullable|string',
-                'sale_details' => 'required|array|min:1',
-                'sale_details.*.quantity' => 'required|integer|min:1',
-                'sale_details.*.subtotal' => 'required|numeric|min:0',
-                'sale_details.*.product_id' => 'required|exists:products,id',
-                'sale_details.*.registered_by' => 'nullable|string'
+                
+                'total_sale' => 'required',
+                'status' => 'nullable',
+                'registered_by' => 'nullable',
+                
             ];
         } elseif ($this->isMethod('PUT')) {
             return [
-                'sale_date' => 'required|date',
-                'total_sale' => 'required|numeric|min:0',
-                'customer_id' => 'required|exists:customers,id',
-                'status' => 'nullable|string',
-                'registered_by' => 'nullable|string',
-                'route' => 'nullable|string',
-                'sale_details' => 'required|array|min:1',
-                'sale_details.*.quantity' => 'required|integer|min:1',
-                'sale_details.*.subtotal' => 'required|numeric|min:0',
-                'sale_details.*.product_id' => 'required|exists:products,id',
-                'sale_details.*.registered_by' => 'nullable|string'
+                'total_sale' => 'required',
+                'status' => 'nullable',
+                'registered_by' => 'nullable',
+                'sale_details' => 'required',
+                'sale_details.*.quantity' => 'required',
+                'sale_details.*.subtotal' => 'required',
             ];
         }
     }

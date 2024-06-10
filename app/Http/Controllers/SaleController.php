@@ -13,6 +13,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Exception;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 class SaleController extends Controller
@@ -65,27 +66,9 @@ class SaleController extends Controller
             'customer_id' => Customer::find($request->customer)->id,
         ]);
 
-        $sale->status = 1;
-        $sale->registered_by = $request->registered_by;
+        
 
-        //$total_sale = 0;
-
-        //  $rawProductId = $request->product_id;
-        //  $rawQuantity = $request->quantity;
-        // for ($i = 0; $i < count($rawProductId); $i++) {
-        //     $product = Product::find($rawProductId[$i]);
-        //     $quantity = $rawQuantity[$i];
-        //     $subtotal = $product->purchase_price * $quantity;
-
-        //   $sale->saleDetails()->create([
-        //         'quantity' => $quantity,
-        //         'subtotal' => $subtotal,
-        //         'product_id' => $product->id,
-        //      ]);
-
-             
-        //  }
-
+        $total =0;
         $rawProductId = $request->product_id;
         $rawQuantity = $request->quantity;
     
@@ -100,21 +83,61 @@ class SaleController extends Controller
            
             $subtotal = $product->purchase_price * $quantity;
     
-            // Crear el detalle de la venta
+           
             $sale->saleDetails()->create([
                 'quantity' => $quantity,
                 'subtotal' => $subtotal,
                 'product_id' => $product->id,
             ]);
+
+            $total += $subtotal;
         }
 
-        // $sale->total_sale = $total_sale;
+        $sale->total_sale = $total;
+
+         // Generate bill (PDF).
+         $pdfName = 'uploads/bills/bill_' . $sale->id . '_' . Carbon::now()->format('YmdHis') . '.pdf';
+
+         $sale = Sale::find($sale->id);
+         $customer = Customer::where("id", $sale->customer_id)->first();
+         $details = Sale_detail::with('product')
+             ->where('sale_details.sale_id', '=', $sale->id)
+             ->get();
+
+         $pdf = PDF::loadView('sales.bill', compact("sale", "customer", "details"))
+             ->setPaper('letter')
+             ->output();
+
+         file_put_contents($pdfName, $pdf);
+
+         $sale->route = $pdfName;
+         
+         $sale->status = 1;
+         $sale->registered_by = $request->registered_by;
+        
         $sale->save();
 
         return redirect()->route("sales.index")->with("success", "The orders has been created.");
         
        
     }
+
+    //metodo para mostrar el pdf
+    public function generatePDF($id)
+    {
+
+        $sale = Sale::find($id);
+        $customer = Customer::where("id", $sale->customer_id)->first();
+        $details = Sale_detail::with('product')
+            ->where('sale_details.sale_id', '=', $sale->id)
+            ->get();
+        
+        $pdf = PDF::loadView('sales.bill', compact('sale','customer','details'));
+
+        return $pdf->stream('sale_'.$id.'.pdf');
+    }
+
+    
 
     /**
      * Display the specified resource.

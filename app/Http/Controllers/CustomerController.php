@@ -33,14 +33,12 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CustomerRequest $request)
     {
         $customer = new Customer();
-      
-		
-
         $image = $request->file('image');
 		$slug = Str::slug($request->name);
+        
 			if (isset($image))
 			{
 				$currentDate = Carbon::now()->toDateString();
@@ -87,7 +85,7 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,$id){
+    public function update(CustomerRequest $request,$id){
   
 			$customer = Customer::find($id);
 			$image = $request->file('image');
@@ -115,7 +113,6 @@ class CustomerController extends Controller
             $customer->phone= $request->phone;
             $customer->address= $request->address;
             $customer->status=1;
-            $customer->image=$imagename;
             $customer->registered_by=$request->user()->id;
 			$customer->save();
             return redirect()->route('customers.index')->with('successMsg','El registro se actualizó exitosamente');

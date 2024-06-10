@@ -66,6 +66,8 @@ Route::group(['middleware' => ['auth']],function(){
     //Route::get('changestatus_sale_detail', [SaleController::class, 'changestatus_sale_detail'])->name('changestatus_sale_detail');
     //Route::get('/products', [App\Http\Controllers\ProductController::class, 'index'])->name('products');
 
+    //ruta para el pdf opcional
+    Route::get('/sale/pdf/{id}', [App\Http\Controllers\SaleController::class, 'generatePDF'])->name('sale.pdf');
 
 });
 

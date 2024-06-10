@@ -72,6 +72,9 @@
                                                     <td>{{ $sale->registered_by }}</td>
                                                    
                                                     <td>
+                                                        <a target="_blank" href="{{ route('sale.pdf', $sale->id) }}" class="btn btn-primary btn-sm" title="Download bill">
+                                                            <i class="fa-solid fa-file-pdf"></i>
+                                                        </a>
                                                         <form class="d-inline delete-form"
                                                             action="{{ route('sales.destroy', $sale->id) }}"
                                                             method="POST">
@@ -84,6 +87,8 @@
                                                         <a href="{{ route('sales.show', $sale) }}"
                                                         class="btn btn-primary btn-sm" title="View">
                                                         <i class="fa-solid fa-eye"></i>
+
+                                                        
                                                     </a>
                                                     </td>
                                                 </tr>

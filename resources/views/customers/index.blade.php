@@ -79,6 +79,8 @@
                         <a class="btn btn-info btn-sm"
                         href="{{ route('customers.edit', $customer->id) }}" title="Edit"><i
                             class="fas fa-pencil-alt"></i></a>
+
+                           
                     </td>
                   </tr>
                   @endforeach
