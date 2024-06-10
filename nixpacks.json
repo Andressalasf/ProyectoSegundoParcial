@@ -16,7 +16,7 @@
         },
         "start": {
             "commands": [
-                "php artisan migrate --force"
+                "php artisan migrate"
             ]
         }
     },
