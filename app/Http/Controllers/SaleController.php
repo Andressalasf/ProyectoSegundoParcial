@@ -144,11 +144,7 @@ class SaleController extends Controller
      */
     public function show(string $id)
     {
-        // $sale = Sale::find($id);
-        // $customer = Customer::where("id", $sale->customer_id)->first();
-        // $details = Sale_detail::with('product')
-        //     ->where('sale_details.sale_id', '=', $id)
-        //     ->get();
+        
 
         $sales=Sale::select('customers.first_name as customerName','customers.identification_document as document','sales.sale_date', 'sales.total_sale', 'sales.id')
         ->join('customers', 'sales.customer_id', '=', 'customers.id')->where('sales.id', '=', $id)->first();
